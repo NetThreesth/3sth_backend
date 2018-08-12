@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <form action="http://35.236.167.99:5000/3sth/api/v1.0/chatbots/" method="post" enctype="multipart/form-data">
+    <!--<form action="http://127.0.0.1:5000/3sth/api/v1.0/chatbots/" method="post" enctype="multipart/form-data">-->
+        msg:<input type="text" name="msg"><br>
+        roomId:<input type="number" name="rid"><br>
+        <input type="submit" value="test Chatbot" name="submit">
+    </form><br />
+    
+    <form action="http://35.236.167.99:5000/3sth/api/v1.0/userdata/" method="post" enctype="multipart/form-data">
+    <!--<form action="http://127.0.0.1:5000/3sth/api/v1.0/userdata/" method="post" enctype="multipart/form-data">-->
+        touch:<input type="number" name="touch"><br>    
+        time(min):<input type="number" name="time"><br>
+        roomId:<input type="number" name="rid"><br>
+        <input type="submit" value="update userdata" name="submit">
+    </form><br />
+
+    <form action="http://35.236.167.99:5000/3sth/api/v1.0/getDeepAIMsg/" method="post" enctype="multipart/form-data">
+    <!--<form action="http://127.0.0.1:5000/3sth/api/v1.0/getDeepAIMsg/" method="post" enctype="multipart/form-data">-->
+        roomId:<input type="number" name="rid"><br>
+        <input type="submit" value="get DeepAI Msg" name="submit">
+    </form><br />
+
+    <form action="http://35.236.167.99:5000/3sth/api/v1.0/getAlgaeData/" method="post" enctype="multipart/form-data">
+    <!--<form action="http://127.0.0.1:5000/3sth/api/v1.0/getAlgaeData/" method="post" enctype="multipart/form-data">-->
+        roomId:<input type="number" name="rid"><br>    
+    <input type="submit" value="get algae data" name="submit">
+    </form><br />
+</body>
+</html>
