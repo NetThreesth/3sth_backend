@@ -33,15 +33,82 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="deepAI.py" />
+    <Compile Include="opencc\opencc.py" />
+    <Compile Include="opencc\__init__.py" />
     <Compile Include="segment.py" />
     <Compile Include="sentenceGenerator.py" />
     <Compile Include="testFlask.py" />
     <Compile Include="wordMgr.py" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="chatbotDB\" />
+    <Folder Include="opencc\" />
+    <Folder Include="opencc\config\" />
+    <Folder Include="opencc\dictionary\" />
+    <Folder Include="opencc\__pycache__\" />
+    <Folder Include="sentenceSet\" />
     <Folder Include="templates\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="chatbotDB\chatbot0_DB.db" />
+    <Content Include="chatbotDB\chatbot1_DB.db" />
+    <Content Include="chatbotDB\chatbot2_DB.db" />
+    <Content Include="chatbotDB\chatbot3_DB.db" />
+    <Content Include="chatbotDB\chatbot4_DB.db" />
+    <Content Include="chatbotDB\chatbot5_DB.db" />
+    <Content Include="chatbotDB\chatbot6_DB.db" />
+    <Content Include="chatbotDB\chatbot7_DB.db" />
+    <Content Include="chatbotDB\chatbot8_DB.db" />
+    <Content Include="chatbotDB\testBot_DB.db" />
+    <Content Include="opencc\config\hk2s.json" />
+    <Content Include="opencc\config\s2hk.json" />
+    <Content Include="opencc\config\s2t.json" />
+    <Content Include="opencc\config\s2tw.json" />
+    <Content Include="opencc\config\s2twp.json" />
+    <Content Include="opencc\config\t2hk.json" />
+    <Content Include="opencc\config\t2s.json" />
+    <Content Include="opencc\config\t2tw.json" />
+    <Content Include="opencc\config\tw2s.json" />
+    <Content Include="opencc\config\tw2sp.json" />
+    <Content Include="opencc\dictionary\HKVariants.txt" />
+    <Content Include="opencc\dictionary\HKVariantsPhrases.txt" />
+    <Content Include="opencc\dictionary\HKVariantsRev.txt" />
+    <Content Include="opencc\dictionary\HKVariantsRevPhrases.txt" />
+    <Content Include="opencc\dictionary\JPVariants.txt" />
+    <Content Include="opencc\dictionary\STCharacters.txt" />
+    <Content Include="opencc\dictionary\STPhrases.txt" />
+    <Content Include="opencc\dictionary\TSCharacters.txt" />
+    <Content Include="opencc\dictionary\TSPhrases.txt" />
+    <Content Include="opencc\dictionary\TWPhrases.txt" />
+    <Content Include="opencc\dictionary\TWPhrasesIT.txt" />
+    <Content Include="opencc\dictionary\TWPhrasesName.txt" />
+    <Content Include="opencc\dictionary\TWPhrasesOther.txt" />
+    <Content Include="opencc\dictionary\TWPhrasesRev.txt" />
+    <Content Include="opencc\dictionary\TWVariants.txt" />
+    <Content Include="opencc\dictionary\TWVariantsRev.txt" />
+    <Content Include="opencc\dictionary\TWVariantsRevPhrases.txt" />
+    <Content Include="opencc\LICENSE" />
+    <Content Include="opencc\NOTICE.txt" />
+    <Content Include="opencc\__pycache__\opencc.cpython-36.pyc" />
+    <Content Include="opencc\__pycache__\__init__.cpython-36.pyc" />
+    <Content Include="sentenceSet\noun_0.json" />
+    <Content Include="sentenceSet\noun_1.json" />
+    <Content Include="sentenceSet\noun_2.json" />
+    <Content Include="sentenceSet\noun_3.json" />
+    <Content Include="sentenceSet\noun_4.json" />
+    <Content Include="sentenceSet\noun_5.json" />
+    <Content Include="sentenceSet\noun_6.json" />
+    <Content Include="sentenceSet\noun_7.json" />
+    <Content Include="sentenceSet\noun_8.json" />
+    <Content Include="sentenceSet\verb_0.json" />
+    <Content Include="sentenceSet\verb_1.json" />
+    <Content Include="sentenceSet\verb_2.json" />
+    <Content Include="sentenceSet\verb_3.json" />
+    <Content Include="sentenceSet\verb_4.json" />
+    <Content Include="sentenceSet\verb_5.json" />
+    <Content Include="sentenceSet\verb_6.json" />
+    <Content Include="sentenceSet\verb_7.json" />
+    <Content Include="sentenceSet\verb_8.json" />
     <Content Include="templates\test.html" />
   </ItemGroup>
   <PropertyGroup>
