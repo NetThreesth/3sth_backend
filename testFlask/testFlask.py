@@ -1,8 +1,6 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
-import json
-import random
-import time
+import json, math, random, time
 from threading import Thread
 
 from flask import Flask, request, render_template
@@ -140,7 +138,8 @@ def split():
 
 @app.route('/test', methods=['GET'])
 def test():
-    return render_template('test.html')
+    #return render_template('test.html')
+    return render_template('testLocal.html')
 
 ##Method
 def text2cmd(msg):
@@ -148,14 +147,11 @@ def text2cmd(msg):
     pumpV = 0
     idx = 0
     score = 0
+    haveGrass = False
     for var in msg:
         code = var.encode('utf-8')
-        p = len(code) - 1
-        v = 0
-        for codeVal in code:
-            v += codeVal << (8 * p)
-            p -= 1
-
+        v = getUTF8CodeValue(code)
+        haveGrass &= checkGrass(v)
         if ledV == 0:
             pumpV = ledV = v
         else:
@@ -167,7 +163,14 @@ def text2cmd(msg):
                 ledV -= v
         idx += 1
 
-    score = ledV * pumpV
+    base = 1
+    if(haveGrass):
+        base = 2
+
+    score = min(2147483646, base * int(math.sqrt(abs(ledV * pumpV))))
+    if(ledV * pumpV < 0):
+        score = -score
+
     if ledV > 0:
         ledV %= 5
     else:
@@ -183,6 +186,21 @@ def text2cmd(msg):
         "score":score
     }
     return result
+
+def getUTF8CodeValue(code):
+    p = len(code) - 1
+    v = 0
+    for codeVal in code:
+        v += codeVal << (8 * p)
+        p -= 1
+    return v
+
+
+def checkGrass(code):
+    if(code >= 15239609 and code <= 15243660):
+        return True
+    else:
+        return False
 
 def getLedBase(time):
     ledValue = 0

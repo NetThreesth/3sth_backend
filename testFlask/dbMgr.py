@@ -30,7 +30,6 @@ class dbMgr:
             cursor.execute(sql)
             self._conn.commit()
         except:
-            print("[addmessage]ERROR")
             self._conn.rollback()
         cursor.close()
 
@@ -45,7 +44,6 @@ class dbMgr:
             cursor.execute(sql)
             self._conn.commit()
         except:
-            print("[addMetaAIPattern]ERROR")
             self._conn.rollback()
         cursor.close()
 

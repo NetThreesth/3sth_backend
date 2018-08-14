@@ -110,6 +110,7 @@
     <Content Include="sentenceSet\verb_7.json" />
     <Content Include="sentenceSet\verb_8.json" />
     <Content Include="templates\test.html" />
+    <Content Include="templates\testLocal.html" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

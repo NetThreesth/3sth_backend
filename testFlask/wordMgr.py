@@ -10,6 +10,11 @@ class wordMgr:
             for val in data['text']:
                 set.append(val)
 
+    def __save(self, path, set):
+        with open(path, 'w', encoding='UTF-8') as file:
+            jsonStr = json.dump(set, ensure_ascii=False)
+            file.write(jsonStr)
+
     def getNounNum(self):
         return len(self._nounSet)
 
@@ -56,22 +61,26 @@ class wordMgr:
         index = random.randint(s, n)
         return self._adjSet[index]
 
-    def addAdj(self, verb):
-        if verb not in self._verbSet:
-            print("Add adj:" + verb)
-            self._adjSet.append(verb)
+    def addAdj(self, adj):
+        if adj not in self._adjSet:
+            print("Add adj:" + adj)
+            self._adjSet.append(adj)
+
+    def saveToFile(self):
+        self.__save(self._nounPath, self._nounSet)
+        self.__save(self._verbPath, self._verbSet)
 
     def setup(self, rid):
         self._nounSet = []
         self._verbSet = []
         self._adjSet = []
         self._rid = rid
-        nounPath = "sentenceSet/noun_" + str(rid) + ".json"
-        verbPath = "sentenceSet/verb_" + str(rid) + ".json"   
-        adjPath = "sentenceSet/adj_" + str(rid) + ".json"
-        self.__load(nounPath, self._nounSet)
-        self.__load(verbPath, self._verbSet)
-        self.__load(adjPath, self._adjSet)
+        self._nounPath = "sentenceSet/noun_" + str(rid) + ".json"
+        self._verbPath = "sentenceSet/verb_" + str(rid) + ".json"   
+        #self._adjPath = "sentenceSet/adj_" + str(rid) + ".json"
+        self.__load(self._nounPath, self._nounSet)
+        self.__load(self._verbPath, self._verbSet)
+        #self.__load(adjPath, self._adjSet)
 
 
 
