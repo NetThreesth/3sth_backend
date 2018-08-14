@@ -1,4 +1,5 @@
 import pymysql
+from datetime import datetime, timedelta
 
 class dbMgr:
     _host = ""
@@ -70,6 +71,30 @@ class dbMgr:
             
         cursor.close()
         return deepAiMsg
+
+    def getTodayMessage(self):
+        if dbMgr._isInit == False:
+            return ""
+        messageList=[]
+        now = datetime.now()
+        yesterday = now - timedelta(1)
+        nowStr = now.strftime('%Y-%m-%d %H-%M-%S')
+        yesterdayStr = yesterday.strftime('%Y-%m-%d %H-%M-%S')
+        sql = "SELECT message FROM threesth.messagelog WHERE time BETWEEN '%s' AND '%s'"
+        sql = sql % (yesterdayStr, nowStr)
+        cursor = self._conn.cursor()
+        try:
+            cursor.execute(sql)
+            self._conn.commit()
+            
+            result = cursor.fetchall()
+            for row in result:
+                messageList.append(row[0])
+        except:
+            self._conn.rollback()
+            
+        cursor.close()
+        return messageList
 
     def __init__(self):
         if dbMgr._isInit:

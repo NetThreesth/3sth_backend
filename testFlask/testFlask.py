@@ -77,6 +77,17 @@ def userdata():
     }
     return json.dumps(resp, ensure_ascii=False)
 
+@app.route('/3sth/api/v1.0/getTodayMsg/', methods=['GET'])
+def getTodayMsg():
+    db = dbMgr()
+    msg = db.getTodayMessage()
+    resp = {
+        "active":"getTodayMsg",
+        "msg":msg
+    }
+    del db
+    return json.dumps(resp, ensure_ascii=False)
+
 @app.route('/3sth/api/v1.0/getAlgaeData/', methods=['POST'])
 def getAlgaeData():
     roomId = int(request.form['rid'])
@@ -192,7 +203,10 @@ if __name__ == '__main__':
 
     #database
     dbMgr.initConnect("35.236.188.139", "root", "threesththreesththreesth", "threesth")
-    
+    db = dbMgr()
+    data = db.getTodayMessage()
+    del db
+
     #deepAI
     deepAI = deepAIThread()
     deepAI.setDaemon(True)
@@ -223,5 +237,5 @@ if __name__ == '__main__':
     loop.setDaemon(True)
     loop.start()
 
-    app.run("0.0.0.0", use_reloader=False)
-    #app.run(use_reloader=False);
+    #app.run("0.0.0.0", use_reloader=False)
+    app.run(use_reloader=False);
