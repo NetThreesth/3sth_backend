@@ -34,6 +34,21 @@ class dbMgr:
             self._conn.rollback()
         cursor.close()
 
+    def addMetaAIPattern(self, pattern):
+        if dbMgr._isInit == False:
+            return ""
+        sql = 'INSERT INTO threesth.metapattern(pattern) VALUES("%s")'
+        sql = sql % pattern
+
+        cursor = self._conn.cursor()
+        try:
+            cursor.execute(sql)
+            self._conn.commit()
+        except:
+            print("[addMetaAIPattern]ERROR")
+            self._conn.rollback()
+        cursor.close()
+
     def getDeepAiMessageMax(self, roomId):
         if dbMgr._isInit == False:
             return ""

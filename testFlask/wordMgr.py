@@ -16,6 +16,9 @@ class wordMgr:
     def getVerbNum(self):
         return len(self._verbSet)
 
+    def getAdjNum(self):
+        return len(self._adjSet)
+
     def getNoun(self):
         return getNoun(0, self.getNounNum())
 
@@ -44,14 +47,31 @@ class wordMgr:
             print("Add verb:" + verb)
             self._verbSet.append(verb)
 
+    def getAdj(self):
+        return getAdj(0, self.getAdjNum())
+
+    def getAdj(self, s, n):
+        if(n > self.getAdjNum()):
+            n = self.getAdjNum()
+        index = random.randint(s, n)
+        return self._adjSet[index]
+
+    def addAdj(self, verb):
+        if verb not in self._verbSet:
+            print("Add adj:" + verb)
+            self._adjSet.append(verb)
+
     def setup(self, rid):
         self._nounSet = []
         self._verbSet = []
+        self._adjSet = []
         self._rid = rid
         nounPath = "sentenceSet/noun_" + str(rid) + ".json"
         verbPath = "sentenceSet/verb_" + str(rid) + ".json"   
+        adjPath = "sentenceSet/adj_" + str(rid) + ".json"
         self.__load(nounPath, self._nounSet)
         self.__load(verbPath, self._verbSet)
+        self.__load(adjPath, self._adjSet)
 
 
 

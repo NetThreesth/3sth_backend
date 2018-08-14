@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
-import json, random, time
+import json
+import random
+import time
 from threading import Thread
 
 from flask import Flask, request, render_template
@@ -88,6 +90,17 @@ def getTodayMsg():
     del db
     return json.dumps(resp, ensure_ascii=False)
 
+@app.route('/3sth/api/v1.0/uploadPattern/', methods=['POST'])
+def uploadPattern():
+    pattern = request.form['pattern']
+    db = dbMgr()
+    db.addMetaAIPattern(pattern)
+    resp = {
+        "active":"uploadPattern"
+    }
+    del db
+    return json.dumps(resp, ensure_ascii=False)
+
 @app.route('/3sth/api/v1.0/getAlgaeData/', methods=['POST'])
 def getAlgaeData():
     roomId = int(request.form['rid'])
@@ -112,6 +125,17 @@ def getDeepAIMsg():
         "deepAiMsg":result
     }
     del db
+    return json.dumps(resp, ensure_ascii=False)
+
+@app.route('/3sth/api/v1.0/split/', methods=['POST'])
+def split():
+    msg = ""
+    msg = request.form['msg']
+    segment = seg.splitMsg(msg)
+    resp = {
+        "active":"segment",
+        "msg":segment
+    }
     return json.dumps(resp, ensure_ascii=False)
 
 @app.route('/test', methods=['GET'])
@@ -143,7 +167,7 @@ def text2cmd(msg):
                 ledV -= v
         idx += 1
 
-    score = ledV
+    score = ledV * pumpV
     if ledV > 0:
         ledV %= 5
     else:
@@ -180,7 +204,7 @@ def getLedBase(time):
     return ledValue 
 
 def getPumpBase(touch):
-    pumpValue = touch / 50.0 + 20;
+    pumpValue = touch / 50.0 + 20
     return min(255, pumpValue)
 
 ##Main Loop
@@ -237,5 +261,5 @@ if __name__ == '__main__':
     loop.setDaemon(True)
     loop.start()
 
-    #app.run("0.0.0.0", use_reloader=False)
-    app.run(use_reloader=False);
+    app.run("0.0.0.0", use_reloader=False)
+    #app.run(use_reloader=False);

@@ -7,10 +7,14 @@ class algaeChatbot:
         charbotId = "chatbot" + str(rid)
         charbotDB = "chatbotDB/" + charbotId + "_DB.db"
 
-        self.chatbot = ChatBot("testBot",
+        self.chatbot = ChatBot(charbotId,
             storage_adapter="chatterbot.storage.SQLStorageAdapter",
             database=charbotDB)
         self.chatbot.set_trainer(ChatterBotCorpusTrainer)
+        #self.chatbot.train(
+        #    "./training_corpus/0624_corpus.yml",
+        #    "./training_corpus/0808_corpus.yml"
+        #    )
         
     def getResponse(self, msg=""):
         return self.chatbot.get_response(msg)
