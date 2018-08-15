@@ -8,7 +8,8 @@ class eWordType(Enum):
     eNoun = 0
     eVerb = 1
     eSubject = 2
-    eQuestion = 3
+    eAdjust = 3
+    eQuestion = 4
 
 class sentenceRule:
     def __init__(self):
@@ -24,27 +25,32 @@ class sentenceGenerator:
         rule1.sRule.append(eWordType.eNoun)
 
         rule2 = sentenceRule()
-        rule2.sRule.append(eWordType.eSubject)
+        rule2.sRule.append(eWordType.eAdjust)
+        rule2.sRule.append(eWordType.eNoun)
         rule2.sRule.append(eWordType.eVerb)
-        rule2.sRule.append(eWordType.eQuestion)
+        rule2.sRule.append(eWordType.eSubject)
 
         rule3 = sentenceRule()
+        rule3.sRule.append(eWordType.eSubject)
+        rule3.sRule.append(eWordType.eAdjust)
         rule3.sRule.append(eWordType.eNoun)
-        rule3.sRule.append(eWordType.eVerb)
-        rule3.sRule.append(eWordType.eQuestion)
+
+        rule4 = sentenceRule()
+        rule4.sRule.append(eWordType.eSubject)
+        rule4.sRule.append(eWordType.eVerb)
+        rule4.sRule.append(eWordType.eQuestion)
+
+        rule5 = sentenceRule()
+        rule5.sRule.append(eWordType.eNoun)
+        rule5.sRule.append(eWordType.eVerb)
+        rule5.sRule.append(eWordType.eQuestion)
 
         self._sentenceMgr.append(rule1)
         self._sentenceMgr.append(rule2)
         self._sentenceMgr.append(rule3)
+        self._sentenceMgr.append(rule4)
+        self._sentenceMgr.append(rule5)
 
-    def __getSubject(self):
-        val = random.randint(0, 3)
-        if val == 0:
-            return u"你"
-        elif val == 1:
-            return u"我"
-        else:
-            return u"他"
 
     def getSentence(self, value, intensity):
         ruleIdx = random.randint(0,  int(self.map(intensity, 0, 255, 0, 2)))
@@ -66,11 +72,15 @@ class sentenceGenerator:
                 sentence += text
 
             elif type == eWordType.eSubject:
-                sentence += self.__getSubject()
+                num = self._wMgr.getSubjectNum()
+                sentence += self._wMgr.getSubject(0, num)
+
             elif type == eWordType.eQuestion:
-                sentence += u"了嗎？"
+                sentence += u"嗎？"
         return sentence;
 
+    def save(self):
+        self._wMgr.saveToFile()
 
     def map(self, value, leftMin, leftMax, rightMin, rightMax):
         leftSpan = leftMax - leftMin
@@ -90,6 +100,10 @@ class sentenceGenerator:
                 self._wMgr.addNoun(text)
             elif(type == 'v'):
                 self._wMgr.addVerb(text)
+            elif(type == 'r'):
+                self._wMgr.addSubject(text)
+            elif(type == 'a'):
+                self._wMgr.addAdj(text)
 
     def __init__(self, rid):
         self._wMgr = wordMgr()

@@ -12,7 +12,8 @@ class wordMgr:
 
     def __save(self, path, set):
         with open(path, 'w', encoding='UTF-8') as file:
-            jsonStr = json.dump(set, ensure_ascii=False)
+            data = {'text':set}
+            jsonStr = json.dumps(data, ensure_ascii=False)
             file.write(jsonStr)
 
     def getNounNum(self):
@@ -20,6 +21,9 @@ class wordMgr:
 
     def getVerbNum(self):
         return len(self._verbSet)
+
+    def getSubjectNum(self):
+        return len(self._subjectSet)
 
     def getAdjNum(self):
         return len(self._adjSet)
@@ -35,7 +39,6 @@ class wordMgr:
 
     def addNoun(self, noun):
         if noun not in self._nounSet:
-            print("Add noun:" + noun)
             self._nounSet.append(noun)
 
     def getVerb(self):
@@ -49,8 +52,20 @@ class wordMgr:
 
     def addVerb(self, verb):
         if verb not in self._verbSet:
-            print("Add verb:" + verb)
             self._verbSet.append(verb)
+
+    def getSubject(self):
+        return getSubject(0, self.getSubjectNum())
+
+    def getSubject(self, s, n):
+        if(n > self.getSubjectNum()):
+            n = self.getSubjectNum()
+        index = random.randint(s, n)
+        return self._subjectSet[index]
+
+    def addSubject(self, subject):
+        if subject not in self._subjectSet:
+            self._subjectSet.append(subject)
 
     def getAdj(self):
         return getAdj(0, self.getAdjNum())
@@ -63,24 +78,28 @@ class wordMgr:
 
     def addAdj(self, adj):
         if adj not in self._adjSet:
-            print("Add adj:" + adj)
             self._adjSet.append(adj)
 
     def saveToFile(self):
         self.__save(self._nounPath, self._nounSet)
         self.__save(self._verbPath, self._verbSet)
+        self.__save(self._subjectPath, self._subjectSet)
+        self.__save(self._adjPath, self._adjSet)
 
     def setup(self, rid):
         self._nounSet = []
         self._verbSet = []
+        self._subjectSet = []
         self._adjSet = []
         self._rid = rid
         self._nounPath = "sentenceSet/noun_" + str(rid) + ".json"
         self._verbPath = "sentenceSet/verb_" + str(rid) + ".json"   
-        #self._adjPath = "sentenceSet/adj_" + str(rid) + ".json"
+        self._adjPath = "sentenceSet/adj_" + str(rid) + ".json"
+        self._subjectPath = "sentenceSet/sub_" + str(rid) + ".json"
         self.__load(self._nounPath, self._nounSet)
         self.__load(self._verbPath, self._verbSet)
-        #self.__load(adjPath, self._adjSet)
+        self.__load(self._adjPath, self._adjSet)
+        self.__load(self._subjectPath, self._subjectSet)
 
 
 
