@@ -41,6 +41,7 @@ class wordMgr:
         if noun not in self._nounSet:
             self._nounSet.append(noun)
 
+
     def getVerb(self):
         return getVerb(0, self.getVerbNum())
 

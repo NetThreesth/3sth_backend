@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 import json, math, random, time
+from datetime import datetime as dt
 from threading import Thread
 
 from flask import Flask, request, render_template
@@ -227,10 +228,13 @@ def getPumpBase(touch):
 
 ##Main Loop
 def mainLoop():
+    prevM = dt.now().minute
     while(True):
         time.sleep(30)
         for rid in range(0, 9):
             algaeDeviceList[rid].checkTimer(30)
+            sentenceMgr[rid].checkTimer(30)
+
 
 if __name__ == '__main__':
     

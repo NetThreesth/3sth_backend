@@ -105,7 +105,14 @@ class sentenceGenerator:
             elif(type == 'a'):
                 self._wMgr.addAdj(text)
 
+    def checkTimer(self, delta):
+        self.timer -= delta
+        if self.timer <= 0:
+            self.timer = 60 * 60
+            self.save()
+
     def __init__(self, rid):
+        self._timer = 60 * 60 #1 hour
         self._wMgr = wordMgr()
         self._wMgr.setup(rid)
 
