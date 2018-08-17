@@ -44,9 +44,9 @@ def talk():
         "active":"chatbots",
         "roomId":str(roomId),
         "inputMsg":msg,
-        "chatbotResponse":botList[roomId].getResponse(msg).text,
+        "chatbotResponse":botList[roomId].getResponse(msg),
         "algaeResponse":algaeResponse,
-        "chatbot2algaeResponse":botList[roomId].getResponse(algaeResponse).text,
+        "chatbot2algaeResponse":botList[roomId].getResponse(algaeResponse),
         "text2cmd":t2c,
         "pump":data.pump,
         "led":data.led,  
@@ -125,21 +125,21 @@ def getDeepAIMsg():
     del db
     return json.dumps(resp, ensure_ascii=False)
 
-@app.route('/3sth/api/v1.0/split/', methods=['POST'])
-def split():
+@app.route('/3sth/api/v1.0/chatbotTest/', methods=['POST'])
+def chatbotTest():
     msg = ""
     msg = request.form['msg']
-    segment = seg.splitMsg(msg)
+    botList[0].getResponse(msg)
     resp = {
-        "active":"segment",
-        "msg":segment
+        "active":"chatbotTest",
+        "msg":botList[0].getResponse(msg)
     }
     return json.dumps(resp, ensure_ascii=False)
 
 @app.route('/test', methods=['GET'])
 def test():
-    return render_template('test.html')
-    #return render_template('testLocal.html')
+    #return render_template('test.html')
+    return render_template('testLocal.html')
 
 ##Method
 def text2cmd(msg):
@@ -231,7 +231,6 @@ def mainLoop():
         time.sleep(30)
         for rid in range(0, 9):
             algaeDeviceList[rid].checkTimer(30)
-
 
 if __name__ == '__main__':
     
