@@ -40,6 +40,9 @@ class wordMgr:
     def addNoun(self, noun):
         if noun not in self._nounSet:
             self._nounSet.append(noun)
+            return True
+        else:
+            return False
 
 
     def getVerb(self):
@@ -54,6 +57,9 @@ class wordMgr:
     def addVerb(self, verb):
         if verb not in self._verbSet:
             self._verbSet.append(verb)
+            return True
+        else:
+            return False
 
     def getSubject(self):
         return getSubject(0, self.getSubjectNum())
@@ -67,6 +73,9 @@ class wordMgr:
     def addSubject(self, subject):
         if subject not in self._subjectSet:
             self._subjectSet.append(subject)
+            return True
+        else:
+            return False
 
     def getAdj(self):
         return getAdj(0, self.getAdjNum())
@@ -80,6 +89,9 @@ class wordMgr:
     def addAdj(self, adj):
         if adj not in self._adjSet:
             self._adjSet.append(adj)
+            return True
+        else:
+            return False
 
     def saveToFile(self):
         self.__save(self._nounPath, self._nounSet)

@@ -12,10 +12,13 @@ class segment:
     def splitMsg(self, input):
         s_sentence = self.__t2s.convert(input)
         words = pseg.cut(s_sentence)
-        result = "";
+        msgSet = []
         for word in words:
-            result += word.word + "[" + word.flag + "],"
-        return self.__s2t.convert(result);
+            set = {}
+            set['word'] = self.__s2t.convert(word.word)
+            set['flag'] = self.__s2t.convert(word.flag)
+            msgSet.append(set)
+        return msgSet;
 
     def __init__(self):
         self.__t2s = OpenCC('t2s')

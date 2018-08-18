@@ -27,17 +27,18 @@ def talk():
     else:
         msg = request.form['msg']
         roomId = int(request.form['rid'])
-    segment = seg.splitMsg(msg)
-    sentenceMgr[roomId].updateWord(segment)
-    algaeResponse = sentenceMgr[roomId].getSentence(255, 255)
-    t2c = text2cmd(msg)
+    splitSet = seg.splitMsg(msg)
+    sentenceMgr[roomId].updateWord(splitSet)
+    algaeData = algaeDeviceList[roomId].getAlgaeData()
+    algaeResponse = sentenceMgr[roomId].getSentence(getRGBAvg(algaeData.color), algaeData.density)
+    t2c = text2cmd(msg, roomId, splitSet)
     
     db = dbMgr()
     db.addMessage(int(roomId), msg, t2c['score']) 
     del db
 
     deepAI.probUp(roomId)
-
+    
     algaeDeviceList[roomId].addAlageData(t2c['pumpValue'], t2c['ledValue'])
     data = algaeDeviceList[roomId].getAlgaeData()
 
@@ -139,11 +140,11 @@ def chatbotTest():
 
 @app.route('/test', methods=['GET'])
 def test():
-    #return render_template('test.html')
-    return render_template('testLocal.html')
+    return render_template('test.html')
+    #return render_template('testLocal.html')
 
 ##Method
-def text2cmd(msg):
+def text2cmd(msg, rid, segment):
     ledV = 0
     pumpV = 0
     idx = 0
@@ -152,7 +153,7 @@ def text2cmd(msg):
     for var in msg:
         code = var.encode('utf-8')
         v = getUTF8CodeValue(code)
-        haveGrass &= checkGrass(v)
+        haveGrass |= checkGrass(v)
         if ledV == 0:
             pumpV = ledV = v
         else:
@@ -164,9 +165,15 @@ def text2cmd(msg):
                 ledV -= v
         idx += 1
 
+    haveSpecSentence = False
+    for word in segment:
+        haveSpecSentence |= sentenceMgr[rid].isInOneDaySet(word['word'])
+
     base = 1
     if(haveGrass):
-        base = 2
+        base += 1
+    if(haveSpecSentence):
+        base += 1
 
     score = min(2147483646, base * int(math.sqrt(abs(ledV * pumpV))))
     if(ledV * pumpV < 0):
@@ -225,6 +232,9 @@ def getLedBase(time):
 def getPumpBase(touch):
     pumpValue = touch / 50.0 + 20
     return min(255, pumpValue)
+
+def getRGBAvg(data):
+    return (int(data[0]) + int(data[1]) + int(data[2])) / 3
 
 ##Main Loop
 def mainLoop():

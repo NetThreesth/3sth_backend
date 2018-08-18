@@ -53,7 +53,8 @@ class sentenceGenerator:
 
 
     def getSentence(self, value, intensity):
-        ruleIdx = random.randint(0,  int(self.map(intensity, 0, 255, 0, 2)))
+        ruleIdx = random.randint(0,  int(self.map(intensity, 0, 1023, 0, 4)))
+        
         rule = self._sentenceMgr[ruleIdx].sRule
         sentence = ""
         for type in rule:
@@ -61,16 +62,23 @@ class sentenceGenerator:
                 num = self._wMgr.getNounNum()
                 index = random.randint(0, int(num * self.map(value, 0, 255, 1, 5)/5.0))
                 text = self._wMgr.getNoun(0, index)
+                self.addToOneDaySet(text)
                 sentence += text
 
             elif type == eWordType.eVerb:
                 num = self._wMgr.getVerbNum()
-                val = self.map(value, 0, 255, 1, 5)/5.0
-             
+                val = self.map(value, 0, 255, 1, 5)/5.0             
                 index = random.randint(0, int(num * val))
                 text = self._wMgr.getVerb(0, index)
+                self.addToOneDaySet(text)
                 sentence += text
-
+            elif type == eWordType.eAdjust:
+                num = self._wMgr.getAdjNum()
+                val = self.map(value, 0, 255, 1, 5)/5.0
+                index = random.randint(0, int(num * val))
+                text = self._wMgr.getAdj(0, index)
+                self.addToOneDaySet(text)
+                sentence += text            
             elif type == eWordType.eSubject:
                 num = self._wMgr.getSubjectNum()
                 sentence += self._wMgr.getSubject(0, num)
@@ -86,35 +94,57 @@ class sentenceGenerator:
         leftSpan = leftMax - leftMin
         rightSpan = rightMax - rightMin
         valueScaled = float(value - leftMin) / float(leftSpan)
-        return rightMin + (valueScaled * rightSpan)
+        val = rightMin + (valueScaled * rightSpan)
+        val = max(min(val, rightMax), rightMin)
+        return val
     
-    def updateWord(self, segmentMsg):
-        
-        if(len(segmentMsg) == 0):
-            return
-        words = segmentMsg.split(',')
-        for word in words:
-            text = word[:word.find('[')]
-            type = word[word.find('[') + 1:word.find(']')]
+    def updateWord(self, segment):
+        isUpdate = False
+        for word in segment:
+            text = word['word']
+            type = word['flag']
             if(type == 'n'):
-                self._wMgr.addNoun(text)
+                isUpdate |= self._wMgr.addNoun(text)
             elif(type == 'v'):
-                self._wMgr.addVerb(text)
+                isUpdate |= self._wMgr.addVerb(text)
             elif(type == 'r'):
-                self._wMgr.addSubject(text)
+                isUpdate |= self._wMgr.addSubject(text)
             elif(type == 'a'):
-                self._wMgr.addAdj(text)
+                isUpdate |= self._wMgr.addAdj(text)
+
+        self._needUpdate |= isUpdate
+
+    def addToOneDaySet(self, text):
+        if text not in self._oneDaySet:
+            self._oneDaySet.append(text)
+
+    def isInOneDaySet(self, text):
+        if text in self._oneDaySet:
+            return True
+        else:
+            return False
 
     def checkTimer(self, delta):
-        self.timer -= delta
-        if self.timer <= 0:
-            self.timer = 60 * 60
-            self.save()
+        self._timer -= delta
+        self._oneDayTimer -= delta
+
+        if self._timer <= 0:
+            self._timer = 60 * 60
+            if self._needUpdate:
+                self._needUpdate = False
+                self.save()
+        if self._oneDayTimer <= 0:
+            self._oneDayTimer = 60 * 60 * 24
+            self._oneDaySet.clear()
 
     def __init__(self, rid):
+        self._needUpdate = False
         self._timer = 60 * 60 #1 hour
         self._wMgr = wordMgr()
         self._wMgr.setup(rid)
+
+        self._oneDayTimer = 60 * 60 * 24
+        self._oneDaySet = []
 
         self._sentenceMgr = []
         self.__initSentenceMgr()
