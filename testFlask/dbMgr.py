@@ -93,7 +93,7 @@ class dbMgr:
         yesterday = now - timedelta(1)
         nowStr = now.strftime('%Y-%m-%d %H-%M-%S')
         yesterdayStr = yesterday.strftime('%Y-%m-%d %H-%M-%S')
-        sql = "SELECT message FROM threesth.messagelog WHERE time BETWEEN '%s' AND '%s'"
+        sql = "SELECT message FROM threesth.messagelog WHERE time BETWEEN '%s' AND '%s' AND LENGTH(message) < 100"
         sql = sql % (yesterdayStr, nowStr)
         cursor = self._conn.cursor()
         try:

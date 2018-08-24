@@ -71,7 +71,10 @@ def userdata():
     pumpValue = getPumpBase(touch)
     ledValue = getLedBase(time)
 
-    algaeDeviceList[roomId].updateBaseline(pumpValue, ledValue)
+    if(roomId >= 0 and roomId < 9):
+        algaeDeviceList[roomId].updateBaseline(pumpValue, ledValue)
+    else:
+        print("[In userData]room Id out of range :" + str(roomId))
     resp = {
         "active":"userdata",
         "baseline_pump":pumpValue,
@@ -258,9 +261,6 @@ if __name__ == '__main__':
 
     #database
     dbMgr.initConnect("35.236.188.139", "root", "threesththreesththreesth", "threesth")
-    db = dbMgr()
-    data = db.getTodayMessage()
-    del db
 
     #deepAI
     deepAI = deepAIThread()

@@ -34,7 +34,7 @@ class wordMgr:
     def getNoun(self, s, n):
         if(n > self.getNounNum()):
             n = self.getNounNum()
-        index = random.randint(s, n)
+        index = random.randint(s, n - 1)
         return self._nounSet[index]
 
     def addNoun(self, noun):
@@ -51,7 +51,7 @@ class wordMgr:
     def getVerb(self, s, n):
         if(n > self.getVerbNum()):
             n = self.getVerbNum()
-        index = random.randint(s, n)
+        index = random.randint(s, n - 1)
         return self._verbSet[index]
 
     def addVerb(self, verb):
@@ -67,7 +67,7 @@ class wordMgr:
     def getSubject(self, s, n):
         if(n > self.getSubjectNum()):
             n = self.getSubjectNum()
-        index = random.randint(s, n)
+        index = random.randint(s, n - 1)
         return self._subjectSet[index]
 
     def addSubject(self, subject):
@@ -83,7 +83,7 @@ class wordMgr:
     def getAdj(self, s, n):
         if(n > self.getAdjNum()):
             n = self.getAdjNum()
-        index = random.randint(s, n)
+        index = random.randint(s, n - 1)
         return self._adjSet[index]
 
     def addAdj(self, adj):
