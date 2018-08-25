@@ -9,7 +9,25 @@ class eWordType(Enum):
     eVerb = 1
     eSubject = 2
     eAdjust = 3
-    eQuestion = 4
+    eParticles = 4
+    eAdverb = 5
+    eQuestion = 6
+    eYesOrNot = 7
+    eHaveOrNot = 8
+    eHave = 9
+    eIf = 10
+    eWillBe = 11
+    eBecause = 12
+    eSo = 13
+    eSince = 14
+    eThen = 15
+    eBa = 16
+    eAll = 17
+    eRe = 18
+    eComma = 19
+    eSubjectOrNoun = 20
+    
+
 
 class sentenceRule:
     def __init__(self):
@@ -19,37 +37,198 @@ class sentenceGenerator:
     
 
     def __initSentenceMgr(self):
-        rule1 = sentenceRule()
-        rule1.sRule.append(eWordType.eSubject)
-        rule1.sRule.append(eWordType.eVerb)
-        rule1.sRule.append(eWordType.eNoun)
+        ruleSet = []
+        ruleSet.append(sentenceRule())
+        ruleSet[-1].sRule.append(eWordType.eVerb)
+        ruleSet[-1].sRule.append(eWordType.eNoun)
 
-        rule2 = sentenceRule()
-        rule2.sRule.append(eWordType.eAdjust)
-        rule2.sRule.append(eWordType.eNoun)
-        rule2.sRule.append(eWordType.eVerb)
-        rule2.sRule.append(eWordType.eSubject)
+        ruleSet.append(sentenceRule())
+        ruleSet[-1].sRule.append(eWordType.eAdjust)
+        ruleSet[-1].sRule.append(eWordType.eNoun)
 
-        rule3 = sentenceRule()
-        rule3.sRule.append(eWordType.eSubject)
-        rule3.sRule.append(eWordType.eAdjust)
-        rule3.sRule.append(eWordType.eNoun)
+        ruleSet.append(sentenceRule())
+        ruleSet[-1].sRule.append(eWordType.eSubject)
+        ruleSet[-1].sRule.append(eWordType.eAdjust)
 
-        rule4 = sentenceRule()
-        rule4.sRule.append(eWordType.eSubject)
-        rule4.sRule.append(eWordType.eVerb)
-        rule4.sRule.append(eWordType.eQuestion)
+        ruleSet.append(sentenceRule())
+        ruleSet[-1].sRule.append(eWordType.eSubject)
+        ruleSet[-1].sRule.append(eWordType.eVerb)
 
-        rule5 = sentenceRule()
-        rule5.sRule.append(eWordType.eNoun)
-        rule5.sRule.append(eWordType.eVerb)
-        rule5.sRule.append(eWordType.eQuestion)
+        ruleSet.append(sentenceRule())
+        ruleSet[-1].sRule.append(eWordType.eSubjectOrNoun)
+        ruleSet[-1].sRule.append(eWordType.eYesOrNot)
+        ruleSet[-1].sRule.append(eWordType.eNoun)
 
-        self._sentenceMgr.append(rule1)
-        self._sentenceMgr.append(rule2)
-        self._sentenceMgr.append(rule3)
-        self._sentenceMgr.append(rule4)
-        self._sentenceMgr.append(rule5)
+        ruleSet.append(sentenceRule())
+        ruleSet[-1].sRule.append(eWordType.eSubjectOrNoun)
+        ruleSet[-1].sRule.append(eWordType.eAdverb)
+        ruleSet[-1].sRule.append(eWordType.eAdjust)
+
+        ruleSet.append(sentenceRule())
+        ruleSet[-1].sRule.append(eWordType.eSubjectOrNoun)
+        ruleSet[-1].sRule.append(eWordType.eYesOrNot)
+        ruleSet[-1].sRule.append(eWordType.eAdjust)
+        ruleSet[-1].sRule.append(eWordType.eParticles)
+
+        ruleSet.append(sentenceRule())
+        ruleSet[-1].sRule.append(eWordType.eSubjectOrNoun)
+        ruleSet[-1].sRule.append(eWordType.eHaveOrNot)
+        ruleSet[-1].sRule.append(eWordType.eNoun)
+
+        ruleSet.append(sentenceRule())
+        ruleSet[-1].sRule.append(eWordType.eSubjectOrNoun)
+        ruleSet[-1].sRule.append(eWordType.eYesOrNot)
+        ruleSet[-1].sRule.append(eWordType.eVerb)
+
+        ruleSet.append(sentenceRule())
+        ruleSet[-1].sRule.append(eWordType.eNoun)
+        ruleSet[-1].sRule.append(eWordType.eHave)
+        ruleSet[-1].sRule.append(eWordType.eVerb)
+
+        ruleSet.append(sentenceRule())
+        ruleSet[-1].sRule.append(eWordType.eSubjectOrNoun)
+        ruleSet[-1].sRule.append(eWordType.eVerb)
+        ruleSet[-1].sRule.append(eWordType.eNoun)
+
+        ruleSet.append(sentenceRule())
+        ruleSet[-1].sRule.append(eWordType.eAdjust)
+        ruleSet[-1].sRule.append(eWordType.eParticles)
+        ruleSet[-1].sRule.append(eWordType.eNoun)
+        ruleSet[-1].sRule.append(eWordType.eVerb)
+        ruleSet[-1].sRule.append(eWordType.eSubject)
+
+        ruleSet.append(sentenceRule())
+        ruleSet[-1].sRule.append(eWordType.eSubjectOrNoun)
+        ruleSet[-1].sRule.append(eWordType.eYesOrNot)
+        ruleSet[-1].sRule.append(eWordType.eAdjust)
+        ruleSet[-1].sRule.append(eWordType.eParticles)
+        ruleSet[-1].sRule.append(eWordType.eNoun)
+
+        ruleSet.append(sentenceRule())
+        ruleSet[-1].sRule.append(eWordType.eSubject)
+        ruleSet[-1].sRule.append(eWordType.eParticles)
+        ruleSet[-1].sRule.append(eWordType.eNoun)
+        ruleSet[-1].sRule.append(eWordType.eAdverb)
+        ruleSet[-1].sRule.append(eWordType.eAdjust)
+
+        ruleSet.append(sentenceRule())
+        ruleSet[-1].sRule.append(eWordType.eSubject)
+        ruleSet[-1].sRule.append(eWordType.eParticles)
+        ruleSet[-1].sRule.append(eWordType.eNoun)
+        ruleSet[-1].sRule.append(eWordType.eYesOrNot)
+        ruleSet[-1].sRule.append(eWordType.eAdjust)
+        ruleSet[-1].sRule.append(eWordType.eParticles)
+
+        ruleSet.append(sentenceRule())
+        ruleSet[-1].sRule.append(eWordType.eSubjectOrNoun)
+        ruleSet[-1].sRule.append(eWordType.eHaveOrNot)
+        ruleSet[-1].sRule.append(eWordType.eAdjust)
+        ruleSet[-1].sRule.append(eWordType.eParticles)
+        ruleSet[-1].sRule.append(eWordType.eNoun)
+
+        ruleSet.append(sentenceRule())
+        ruleSet[-1].sRule.append(eWordType.eSubject)
+        ruleSet[-1].sRule.append(eWordType.eParticles)
+        ruleSet[-1].sRule.append(eWordType.eNoun)
+        ruleSet[-1].sRule.append(eWordType.eHaveOrNot)
+        ruleSet[-1].sRule.append(eWordType.eVerb)
+
+        ruleSet.append(sentenceRule())
+        ruleSet[-1].sRule.append(eWordType.eNoun)
+        ruleSet[-1].sRule.append(eWordType.eParticles)
+        ruleSet[-1].sRule.append(eWordType.eNoun)
+        ruleSet[-1].sRule.append(eWordType.eVerb)
+        ruleSet[-1].sRule.append(eWordType.eAdjust)
+        ruleSet[-1].sRule.append(eWordType.eParticles)
+        ruleSet[-1].sRule.append(eWordType.eNoun)
+
+        ruleSet.append(sentenceRule())
+        ruleSet[-1].sRule.append(eWordType.eSubjectOrNoun)
+        ruleSet[-1].sRule.append(eWordType.eYesOrNot)
+        ruleSet[-1].sRule.append(eWordType.eAdjust)
+        ruleSet[-1].sRule.append(eWordType.eParticles)
+        ruleSet[-1].sRule.append(eWordType.eNoun)
+        ruleSet[-1].sRule.append(eWordType.eQuestion)
+
+        ruleSet.append(sentenceRule())
+        ruleSet[-1].sRule.append(eWordType.eSubject)
+        ruleSet[-1].sRule.append(eWordType.eParticles)
+        ruleSet[-1].sRule.append(eWordType.eNoun)
+        ruleSet[-1].sRule.append(eWordType.eAdverb)
+        ruleSet[-1].sRule.append(eWordType.eAdjust)
+        ruleSet[-1].sRule.append(eWordType.eQuestion)
+
+        ruleSet.append(sentenceRule())
+        ruleSet[-1].sRule.append(eWordType.eSubject)
+        ruleSet[-1].sRule.append(eWordType.eParticles)
+        ruleSet[-1].sRule.append(eWordType.eNoun)
+        ruleSet[-1].sRule.append(eWordType.eYesOrNot)
+        ruleSet[-1].sRule.append(eWordType.eAdjust)
+        ruleSet[-1].sRule.append(eWordType.eParticles)
+        ruleSet[-1].sRule.append(eWordType.eQuestion)
+
+        ruleSet.append(sentenceRule())
+        ruleSet[-1].sRule.append(eWordType.eSubjectOrNoun)
+        ruleSet[-1].sRule.append(eWordType.eHaveOrNot)
+        ruleSet[-1].sRule.append(eWordType.eAdjust)
+        ruleSet[-1].sRule.append(eWordType.eParticles)
+        ruleSet[-1].sRule.append(eWordType.eNoun)
+        ruleSet[-1].sRule.append(eWordType.eQuestion)
+
+        ruleSet.append(sentenceRule())
+        ruleSet[-1].sRule.append(eWordType.eSubject)
+        ruleSet[-1].sRule.append(eWordType.eParticles)
+        ruleSet[-1].sRule.append(eWordType.eNoun)
+        ruleSet[-1].sRule.append(eWordType.eHaveOrNot)
+        ruleSet[-1].sRule.append(eWordType.eVerb)
+        ruleSet[-1].sRule.append(eWordType.eQuestion)
+
+        ruleSet.append(sentenceRule())
+        ruleSet[-1].sRule.append(eWordType.eNoun)
+        ruleSet[-1].sRule.append(eWordType.eParticles)
+        ruleSet[-1].sRule.append(eWordType.eNoun)
+        ruleSet[-1].sRule.append(eWordType.eVerb)
+        ruleSet[-1].sRule.append(eWordType.eAdjust)
+        ruleSet[-1].sRule.append(eWordType.eParticles)
+        ruleSet[-1].sRule.append(eWordType.eNoun)
+        ruleSet[-1].sRule.append(eWordType.eQuestion)
+
+        ruleSet.append(sentenceRule())
+        ruleSet[-1].sRule.append(eWordType.eIf)
+        ruleSet[-1].sRule.append(eWordType.eSubjectOrNoun)
+        ruleSet[-1].sRule.append(eWordType.eVerb)
+        ruleSet[-1].sRule.append(eWordType.eComma)
+        ruleSet[-1].sRule.append(eWordType.eSubject)
+        ruleSet[-1].sRule.append(eWordType.eWillBe)
+        ruleSet[-1].sRule.append(eWordType.eVerb)
+        ruleSet[-1].sRule.append(eWordType.eQuestion)
+
+        ruleSet.append(sentenceRule())
+        ruleSet[-1].sRule.append(eWordType.eBecause)
+        ruleSet[-1].sRule.append(eWordType.eAdjust)
+        ruleSet[-1].sRule.append(eWordType.eParticles)
+        ruleSet[-1].sRule.append(eWordType.eNoun)
+        ruleSet[-1].sRule.append(eWordType.eHaveOrNot)
+        ruleSet[-1].sRule.append(eWordType.eVerb)
+        ruleSet[-1].sRule.append(eWordType.eComma)
+        ruleSet[-1].sRule.append(eWordType.eSo)
+        ruleSet[-1].sRule.append(eWordType.eSubjectOrNoun)
+        ruleSet[-1].sRule.append(eWordType.eWillBe)
+        ruleSet[-1].sRule.append(eWordType.eVerb)
+
+        ruleSet.append(sentenceRule())
+        ruleSet[-1].sRule.append(eWordType.eSince)
+        ruleSet[-1].sRule.append(eWordType.eSubject)
+        ruleSet[-1].sRule.append(eWordType.eAll)
+        ruleSet[-1].sRule.append(eWordType.eVerb)
+        ruleSet[-1].sRule.append(eWordType.eRe)
+        ruleSet[-1].sRule.append(eWordType.eComma)
+        ruleSet[-1].sRule.append(eWordType.eThen)
+        ruleSet[-1].sRule.append(eWordType.eVerb)
+        ruleSet[-1].sRule.append(eWordType.eBa)
+
+        for rule in ruleSet:
+            self._sentenceMgr.append(rule)
 
 
     def getSentence(self, value, intensity):
@@ -82,10 +261,140 @@ class sentenceGenerator:
             elif type == eWordType.eSubject:
                 num = self._wMgr.getSubjectNum()
                 sentence += self._wMgr.getSubject(0, num)
-
+            elif type == eWordType.eParticles:
+                sentence += u"的"
+            elif type == eWordType.eAdverb:
+                sentence += self._wMgr.getAdv()
             elif type == eWordType.eQuestion:
                 sentence += u"嗎？"
+            elif type == eWordType.eYesOrNot:
+                if random.randint(0, 10) <= 5:
+                    sentence += u"是"
+                else:
+                    sentence += u"不是"
+            elif type == eWordType.eHaveOrNot:
+                if random.randint(0, 10) <= 5:
+                    sentence += u"有"
+                else:
+                    sentence += u"沒有"
+            elif type == eWordType.eHave:
+                sentence += u"有了"
+            elif type == eWordType.eIf:
+                sentence += u"如果"
+            elif type == eWordType.eWillBe:
+                sentence += u"會"
+            elif type == eWordType.eBecause:
+                sentence += u"因為"
+            elif type == eWordType.eSo:
+                sentence += u"所以"
+            elif type == eWordType.eSince:
+                sentence += u"既然"
+            elif type == eWordType.eThen:
+                sentence += u"那麼就"
+            elif type == eWordType.eBa:
+                sentence += u"吧"
+            elif type == eWordType.eComma:
+                sentence += u"，"
+            elif type == eWordType.eAll:
+                sentence += u"都"
+            elif type == eWordType.eRe:
+                sentence += u"了"
+            elif type == eWordType.eSubjectOrNoun:
+                index = 0
+                text = ""
+                isNoun = True
+                if random.randint(0, 10) <= 5:
+                    isNoun = True
+                    num = self._wMgr.getNounNum()
+                    index = random.randint(0, int(num * self.map(value, 0, 255, 1, 5)/5.0))
+                else:
+                    isNoun = False
+                    index = self._wMgr.getSubjectNum()
+                    
+                if isNoun:
+                    text = self._wMgr.getNoun(0, index)
+                    self.addToOneDaySet(text)
+                else:
+                    text = self._wMgr.getSubject(0, index)
+                sentence += text
         return sentence;
+
+    def testAllRule(self):
+        result = []
+        id = 1
+        for ruleSet in self._sentenceMgr:
+            rule = ruleSet.sRule
+            sentence = ""
+            for type in rule:
+                if type == eWordType.eNoun:
+                    num = self._wMgr.getNounNum()
+                    text = self._wMgr.getNoun(0, num)
+                    sentence += text
+                elif type == eWordType.eVerb:
+                    num = self._wMgr.getVerbNum()
+                    text = self._wMgr.getVerb(0, num)
+                    sentence += text
+                elif type == eWordType.eAdjust:
+                    num = self._wMgr.getAdjNum()
+                    text = self._wMgr.getAdj(0, num)
+                    sentence += text            
+                elif type == eWordType.eSubject:
+                    num = self._wMgr.getSubjectNum()
+                    sentence += self._wMgr.getSubject(0, num)
+                elif type == eWordType.eParticles:
+                    sentence += u"的"
+                elif type == eWordType.eAdverb:
+                    sentence += self._wMgr.getAdv()
+                elif type == eWordType.eQuestion:
+                    sentence += u"嗎？"
+                elif type == eWordType.eYesOrNot:
+                    if random.randint(0, 10) <= 5:
+                        sentence += u"是"
+                    else:
+                        sentence += u"不是"
+                elif type == eWordType.eHaveOrNot:
+                    if random.randint(0, 10) <= 5:
+                        sentence += u"有"
+                    else:
+                        sentence += u"沒有"
+                elif type == eWordType.eHave:
+                    sentence += u"有了"
+                elif type == eWordType.eIf:
+                    sentence += u"如果"
+                elif type == eWordType.eWillBe:
+                    sentence += u"會"
+                elif type == eWordType.eBecause:
+                    sentence += u"因為"
+                elif type == eWordType.eSo:
+                    sentence += u"所以"
+                elif type == eWordType.eSince:
+                    sentence += u"既然"
+                elif type == eWordType.eThen:
+                    sentence += u"那麼就"
+                elif type == eWordType.eBa:
+                    sentence += u"吧"
+                elif type == eWordType.eComma:
+                    sentence += u"，"
+                elif type == eWordType.eAll:
+                    sentence += u"都"
+                elif type == eWordType.eRe:
+                    sentence += u"了"
+                elif type == eWordType.eSubjectOrNoun:
+                    index = 0
+                    text = ""
+                    if random.randint(0, 10) <= 5:
+                        isNoun = True
+                        index = self._wMgr.getNounNum()
+                        text = self._wMgr.getNoun(0, index)
+
+                    else:
+                        isNoun = False
+                        index = self._wMgr.getSubjectNum()
+                        text = self._wMgr.getSubject(0, index)
+                    sentence += text
+            result.append(str(id) + ":" + sentence)
+            id += 1
+        return result;
 
     def save(self):
         self._wMgr.saveToFile()

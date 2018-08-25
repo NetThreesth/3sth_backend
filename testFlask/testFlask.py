@@ -141,10 +141,21 @@ def chatbotTest():
     }
     return json.dumps(resp, ensure_ascii=False)
 
+@app.route('/3sth/api/v1.0/testAlgaeChatRule/', methods=['POST'])
+def testAlgaeChatRule():
+    roomId = int(request.form['rid'])
+    result = sentenceMgr[roomId].testAllRule()
+    resp = {
+        "active":"testAlgaeChatRule",
+        "roomId":roomId,
+        "result":result
+    }
+    return json.dumps(resp, ensure_ascii=False)
+
 @app.route('/test', methods=['GET'])
 def test():
-    return render_template('test.html')
-    #return render_template('testLocal.html')
+    #return render_template('test.html')
+    return render_template('testLocal.html')
 
 ##Method
 def text2cmd(msg, rid, segment):
@@ -271,6 +282,7 @@ if __name__ == '__main__':
     sentenceMgr = []
     for id in range(0, 9):
         sentenceMgr.append(sentenceGenerator(id))
+    
 
     #algae
     algaeDeviceList = []

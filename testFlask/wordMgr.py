@@ -93,6 +93,10 @@ class wordMgr:
         else:
             return False
 
+    def getAdv(self):
+        index = random.randint(0, len(self._advSet) - 1)
+        return self._advSet[index]
+
     def saveToFile(self):
         self.__save(self._nounPath, self._nounSet)
         self.__save(self._verbPath, self._verbSet)
@@ -104,6 +108,7 @@ class wordMgr:
         self._verbSet = []
         self._subjectSet = []
         self._adjSet = []
+        self._advSet = [u"很好",u"非常",u"十分",u"有點",u"不太"]
         self._rid = rid
         self._nounPath = "sentenceSet/noun_" + str(rid) + ".json"
         self._verbPath = "sentenceSet/verb_" + str(rid) + ".json"   
