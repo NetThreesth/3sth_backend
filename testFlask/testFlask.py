@@ -154,8 +154,8 @@ def testAlgaeChatRule():
 
 @app.route('/test', methods=['GET'])
 def test():
-    #return render_template('test.html')
-    return render_template('testLocal.html')
+    return render_template('test.html')
+    #return render_template('testLocal.html')
 
 ##Method
 def text2cmd(msg, rid, segment):

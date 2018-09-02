@@ -13,7 +13,7 @@ class deepAIThread(Thread):
         Thread.__init__(self)
 
     def run(self):
-        url = "http://35.229.249.165/apis/uploadDeepAlMessage"
+        url = "https://3sth.net/apis/uploadDeepAlMessage"
         while(True):
             db = dbMgr()
             time.sleep(10 * 60)
