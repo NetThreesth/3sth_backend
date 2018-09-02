@@ -10,7 +10,7 @@ from algaeChatbot import algaeChatbot
 from segment import segment
 from sentenceGenerator import sentenceGenerator
 from algae import algaeATT
-from deepAI import deepAIThread
+from deepAI import deepAIMgr
 from dbMgr import dbMgr
 
 app = Flask(__name__)
@@ -27,35 +27,47 @@ def talk():
     else:
         msg = request.form['msg']
         roomId = int(request.form['rid'])
+
+    val = random.random()
+    deepAI.countDeep(roomId)
+
     splitSet = seg.splitMsg(msg)
-    sentenceMgr[roomId].updateWord(splitSet)
-    algaeData = algaeDeviceList[roomId].getAlgaeData()
-    algaeResponse = sentenceMgr[roomId].getSentence(getRGBAvg(algaeData.color), algaeData.density)
     t2c = text2cmd(msg, roomId, splitSet)
-    
+
     db = dbMgr()
     db.addMessage(int(roomId), msg, t2c['score']) 
     del db
 
-    deepAI.probUp(roomId)
-    
-    algaeDeviceList[roomId].addAlageData(t2c['pumpValue'], t2c['ledValue'])
-    data = algaeDeviceList[roomId].getAlgaeData()
+    if(val > 0.1):
+        resp = {
+            "active":"chatbots",
+            "roomId":str(roomId),
+            "inputMsg":msg,
+            "chatbotResponse":botList[roomId].getResponse(msg)
+        }
+        return json.dumps(resp, ensure_ascii=False)
+    else:
+        sentenceMgr[roomId].updateWord(splitSet)
+        algaeData = algaeDeviceList[roomId].getAlgaeData()
+        algaeResponse = sentenceMgr[roomId].getSentence(getRGBAvg(algaeData.color), algaeData.density)
 
-    resp = {
-        "active":"chatbots",
-        "roomId":str(roomId),
-        "inputMsg":msg,
-        "chatbotResponse":botList[roomId].getResponse(msg),
-        "algaeResponse":algaeResponse,
-        "chatbot2algaeResponse":botList[roomId].getResponse(algaeResponse),
-        "text2cmd":t2c,
-        "pump":data.pump,
-        "led":data.led,  
-        "density":data.density,
-        "color":data.color
-    }
-    return json.dumps(resp, ensure_ascii=False)
+        algaeDeviceList[roomId].addAlageData(t2c['pumpValue'], t2c['ledValue'])
+        data = algaeDeviceList[roomId].getAlgaeData()
+
+        resp = {
+            "active":"chatbots",
+            "roomId":str(roomId),
+            "inputMsg":msg,
+            "chatbotResponse":botList[roomId].getResponse(msg),
+            "algaeResponse":algaeResponse,
+            "chatbot2algaeResponse":botList[roomId].getResponse(algaeResponse),
+            "text2cmd":t2c,
+            "pump":data.pump,
+            "led":data.led,  
+            "density":data.density,
+            "color":data.color
+        }
+        return json.dumps(resp, ensure_ascii=False)
 
 @app.route('/3sth/api/v1.0/userdata/', methods=['POST'])
 def userdata():
@@ -274,9 +286,7 @@ if __name__ == '__main__':
     dbMgr.initConnect("35.236.188.139", "root", "threesththreesththreesth", "threesth")
 
     #deepAI
-    deepAI = deepAIThread()
-    deepAI.setDaemon(True)
-    deepAI.start()
+    deepAI = deepAIMgr()
 
     #sentaence
     sentenceMgr = []

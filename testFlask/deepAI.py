@@ -3,28 +3,31 @@ import requests
 from threading import Thread
 from dbMgr import dbMgr
 
-class deepAIThread(Thread):
+class deepAIMgr():
     def probUp(self, rId):
         if (rId >= 0 and rId < len(self._probList)):
             self._probList[rId] = 0.6;
 
     def __init__(self):
-        self._probList = [0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3]
-        Thread.__init__(self)
+        self._probList = [0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6]
+        self._countList = [10, 10, 10, 10, 10, 10, 10, 10, 10]
+        #Thread.__init__(self)
 
-    def run(self):
-        url = "https://3sth.net/apis/uploadDeepAlMessage"
-        while(True):
+
+
+    def countDeep(self, roomId):
+        self._countList[roomId] -= 1
+        if(self._countList[roomId] == 0):
+            url = "https://3sth.net/apis/uploadDeepAlMessage"
             db = dbMgr()
-            time.sleep(10 * 60)
-            for rId in range(0, 9):
-                val = random.random()
-                if val < self._probList[rId]:
-                    result = self.getDeepMsg(db, rId)
-                    d = {"rid":rId, "message":result}
-                    requests.post(url, json=d) 
-            del db             
-            
+            val = random.random()
+            if val < self._probList[roomId]:
+                result = self.getDeepMsg(db, roomId)
+                d = {"rid":roomId, "message":result}
+                requests.post(url, json=d) 
+            del db
+            self._countList[roomId] = 10
+
     def getDeepMsg(self, db, roomId):
         max = db.getDeepAiMessageMax(roomId)
         min = db.getDeepAiMessageMin(roomId)
