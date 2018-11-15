@@ -88,7 +88,7 @@ class dbMgr:
     def getTodayMessage(self):
         if dbMgr._isInit == False:
             return ""
-        messageList=[]
+        messageList = []
         now = datetime.now()
         yesterday = now - timedelta(1)
         nowStr = now.strftime('%Y-%m-%d %H-%M-%S')
@@ -108,6 +108,44 @@ class dbMgr:
             
         cursor.close()
         return messageList
+
+    def getPattern(self):
+        if dbMgr._isInit == False:
+            return ""
+        pattern = ""
+        sql = "SELECT pattern FROM threesth.metapattern ORDER BY id DESC LIMIT 1;"
+        cursor = self._conn.cursor()
+        try:
+            cursor.execute(sql)
+            self._conn.commit()
+            
+            result = cursor.fetchall()
+            pattern = result[0][0]
+        except:
+            self._conn.rollback()
+            
+        cursor.close()
+        return pattern
+
+    def getChatCount(self):
+        if dbMgr._isInit == False:
+            return ""
+        count = 0
+        now = datetime.now()
+
+        sql = "SELECT COUNT(*) FROM threesth.messagelog WHERE time > '2018-08-23 00:00:00' AND name != 'chatbot' AND name != 'algae'"
+        cursor = self._conn.cursor()
+        try:
+            cursor.execute(sql)
+            self._conn.commit()
+            
+            result = cursor.fetchall()
+            count = result[0][0]
+        except:
+            self._conn.rollback()
+            
+        cursor.close()
+        return count
 
     def __init__(self):
         if dbMgr._isInit:

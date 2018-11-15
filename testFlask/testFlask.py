@@ -116,6 +116,17 @@ def uploadPattern():
     del db
     return json.dumps(resp, ensure_ascii=False)
 
+@app.route('/3sth/api/v1.0/getPattern/', methods=['GET'])
+def getPattern():
+    db = dbMgr()
+    pattern = db.getPattern()
+    resp = {
+        "active":"getPattern",
+        "pattern":pattern
+    }
+    del db
+    return json.dumps(resp, ensure_ascii=False)
+
 @app.route('/3sth/api/v1.0/getAlgaeData/', methods=['POST'])
 def getAlgaeData():
     roomId = int(request.form['rid'])
@@ -162,6 +173,17 @@ def testAlgaeChatRule():
         "roomId":roomId,
         "result":result
     }
+    return json.dumps(resp, ensure_ascii=False)
+
+@app.route('/3sth/api/v1.0/getChatroomCount/', methods=['GET'])
+def getChatroomCount():
+    db = dbMgr()
+    count = db.getChatCount()
+    resp = {
+        "active":"getChatroomCount",
+        "count":count
+    }
+    del db
     return json.dumps(resp, ensure_ascii=False)
 
 @app.route('/test', methods=['GET'])
@@ -228,7 +250,6 @@ def getUTF8CodeValue(code):
         v += codeVal << (8 * p)
         p -= 1
     return v
-
 
 def checkGrass(code):
     if(code >= 15239609 and code <= 15243660):
