@@ -167,11 +167,20 @@ def chatbotTest():
 @app.route('/3sth/api/v1.0/testAlgaeChatRule/', methods=['POST'])
 def testAlgaeChatRule():
     roomId = int(request.form['rid'])
-    result = sentenceMgr[roomId].testAllRule()
+    allRule = sentenceMgr[roomId].testAllRule()
+
+    testResult = []
+    for val in range(0, 1024, 100):
+        for intensity in range(0, 255, 25):
+            msg = sentenceMgr[roomId].getSentence(val, intensity)
+            testResult.append("Density:" + str(val) + " Intensity:" + str(intensity) + " Msg:" + msg)
+
     resp = {
         "active":"testAlgaeChatRule",
         "roomId":roomId,
-        "result":result
+        "allRule":allRule,
+        "testResult":testResult
+
     }
     return json.dumps(resp, ensure_ascii=False)
 

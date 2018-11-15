@@ -11,8 +11,6 @@ class deepAIMgr():
     def __init__(self):
         self._probList = [0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6]
         self._countList = [10, 10, 10, 10, 10, 10, 10, 10, 10]
-        #Thread.__init__(self)
-
 
 
     def countDeep(self, roomId):

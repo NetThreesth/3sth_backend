@@ -26,8 +26,6 @@ class eWordType(Enum):
     eRe = 18
     eComma = 19
     eSubjectOrNoun = 20
-    
-
 
 class sentenceRule:
     def __init__(self):
@@ -35,7 +33,6 @@ class sentenceRule:
 
 class sentenceGenerator:
     
-
     def __initSentenceMgr(self):
         ruleSet = []
         ruleSet.append(sentenceRule())
@@ -230,31 +227,29 @@ class sentenceGenerator:
         for rule in ruleSet:
             self._sentenceMgr.append(rule)
 
-
     def getSentence(self, value, intensity):
-        ruleIdx = random.randint(0,  int(self.map(intensity, 0, 1023, 0, 4)))
-        
+        ruleIdx = self.getRuleType(value)
         rule = self._sentenceMgr[ruleIdx].sRule
         sentence = ""
         for type in rule:
             if type == eWordType.eNoun:
                 num = self._wMgr.getNounNum()
-                index = random.randint(0, int(num * self.map(value, 0, 255, 1, 5)/5.0))
+                index = random.randint(1, int(num * self.map(intensity, 0, 255, 1, 5)/5.0))
                 text = self._wMgr.getNoun(0, index)
                 self.addToOneDaySet(text)
                 sentence += text
 
             elif type == eWordType.eVerb:
                 num = self._wMgr.getVerbNum()
-                val = self.map(value, 0, 255, 1, 5)/5.0             
-                index = random.randint(0, int(num * val))
+                val = self.map(intensity, 0, 255, 1, 5)/5.0             
+                index = random.randint(1, int(num * val))
                 text = self._wMgr.getVerb(0, index)
                 self.addToOneDaySet(text)
                 sentence += text
             elif type == eWordType.eAdjust:
                 num = self._wMgr.getAdjNum()
-                val = self.map(value, 0, 255, 1, 5)/5.0
-                index = random.randint(0, int(num * val))
+                val = self.map(intensity, 0, 255, 1, 5)/5.0
+                index = random.randint(1, int(num * val))
                 text = self._wMgr.getAdj(0, index)
                 self.addToOneDaySet(text)
                 sentence += text            
@@ -306,7 +301,7 @@ class sentenceGenerator:
                 if random.randint(0, 10) <= 5:
                     isNoun = True
                     num = self._wMgr.getNounNum()
-                    index = random.randint(0, int(num * self.map(value, 0, 255, 1, 5)/5.0))
+                    index = random.randint(1, int(num * self.map(intensity, 0, 255, 1, 5)/5.0))
                 else:
                     isNoun = False
                     index = self._wMgr.getSubjectNum()
@@ -318,6 +313,26 @@ class sentenceGenerator:
                     text = self._wMgr.getSubject(0, index)
                 sentence += text
         return sentence;
+
+    def getRuleType(self, value):
+        perc = value / 1024.0
+        index = 0
+        if perc < 0.1:
+            index = random.randint(0, 3)
+        elif perc >= 0.1 and perc < 0.26:
+            index = random.randint(1, 11)
+        elif perc >= 0.26 and perc < 0.4:
+            index = random.randint(9, 17)
+        elif perc >= 0.4 and perc < 0.6:
+            index = random.randint(11, 23)
+        elif perc >= 0.6 and perc < 0.7:
+            index = random.randint(11, 24)
+        elif perc >= 0.7 and perc < 0.8:
+            index = random.randint(11, 25)
+        elif perc >= 0.8:
+            index = random.randint(11, 26)
+
+        return index
 
     def testAllRule(self):
         result = []
